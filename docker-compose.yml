@@ -17,11 +17,31 @@ services:
       myug:
         aliases:
           - db
+  pgadmin:
+    container_name: myug_pgadmin4
+    image: dpage/pgadmin4
+    restart: unless-stopped
+    depends_on:
+      - db
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
+      PGADMIN_CONFIG_SERVER_MODE: 'False'
+    volumes:
+      - pgadmin:/var/lib/pgadmin
+
+    ports:
+      - "${PGADMIN_PORT:-5050}:80"
+    networks:
+      myug:
+        aliases:
+          - pgadmin
   server:
     container_name: myug-server
     build:
       context: ./server
     depends_on:
+      - db
     restart: unless-stopped
     ports:
       - '${API_PORT}:3771'
@@ -33,10 +53,9 @@ services:
       - TYPEORM_DATABASE=${TYPEORM_DATABASE}
       - TYPEORM_PORT=${TYPEORM_PORT}
       - TYPEORM_HOST=db
-      - MULTER_DEST=${MULTER_DEST}
-      - IMAGES_FOLDER=${IMAGES_FOLDER}
     volumes:
       - assets:/app/assets
+      - etc-letsencrypt:/etc/letsencrypt
     networks:
       myug:
         aliases:
@@ -44,7 +63,9 @@ services:
 
 volumes:
   pgdata:
+  pgadmin:
   assets:
+  etc-letsencrypt:
 
 networks:
   myug:
