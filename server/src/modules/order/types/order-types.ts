@@ -1,4 +1,4 @@
-import { Person } from 'src/cammon/types/app-types';
+import PersonTypes from 'src/modules/person/person-types';
 
 const componentKeys = ['geometry', 'price'] as const;
 
@@ -9,11 +9,13 @@ declare module OrderTypes {
     clientNumner?: string | null;
     author?: Author | null;
     client?: Client | null;
+    manager: Manager | null;
     createdAt?: Date | string;
     updatedAt?: Date | string;
     status: Status | null;
     result: OrderResult;
     documents?: Document[];
+    deleted: boolean;
   }
 
   interface Document {
@@ -34,6 +36,8 @@ declare module OrderTypes {
     updatedAt: Date | string;
     result: DocumentResult;
     elements?: Element[];
+    order: Order;
+    deleted: boolean;
   }
 
   interface Material {
@@ -87,6 +91,7 @@ declare module OrderTypes {
     components: Component[];
     orderBy: number;
     typeOf?: string[];
+    deleted: boolean;
   }
 
   interface Component<T extends object = object> {
@@ -126,8 +131,9 @@ declare module OrderTypes {
 
   type Status = string;
 
-  interface Author extends Person {}
-  interface Client extends Person {}
+  interface Author extends PersonTypes.Person {}
+  interface Client extends PersonTypes.Person {}
+  interface Manager extends PersonTypes.Person {}
 }
 
 export default OrderTypes;

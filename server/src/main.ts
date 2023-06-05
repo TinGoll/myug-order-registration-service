@@ -2,6 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import * as fs from 'fs';
 import { ConfigService } from '@nestjs/config';
+import { HttpExceptionFilter } from './http-exception-filter/http-exception.filter';
 
 async function bootstrap() {
   const httpsOptions = getHttpsOptions();
@@ -27,6 +28,8 @@ async function bootstrap() {
     methods: 'GET,PUT,POST,DELETE,UPDATE,OPTIONS',
     credentials: true,
   });
+
+  app.useGlobalFilters(new HttpExceptionFilter());
 
   await app.listen(port, () => console.log(`server started on port: ${port}`));
 }
