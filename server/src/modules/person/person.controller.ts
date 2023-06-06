@@ -14,6 +14,9 @@ import { PersonUpdateInput } from './inputs/update.input';
 import { PersonLoginInput } from './inputs/login.input';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { Person } from './person.entity';
+import { Roles } from '../auth/roles.decorator';
+import { Role } from '../auth/roles.enum';
+import { RolesGuard } from '../auth/roles.guard';
 
 @Controller('api/persons')
 export class PersonController {
@@ -32,7 +35,8 @@ export class PersonController {
     return this.personService.update(input, request.user);
   }
 
-  @UseGuards(JwtAuthGuard)
+  @Roles(Role.ADMIN)
+  @UseGuards(JwtAuthGuard, RolesGuard)
   @Get()
   @HttpCode(200)
   findAll() {

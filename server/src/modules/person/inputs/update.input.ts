@@ -1,3 +1,4 @@
+import { Role } from 'src/modules/auth/roles.enum';
 import PersonTypes from '../person-types';
 
 export class PersonUpdateInput implements Partial<PersonTypes.Person> {
@@ -8,5 +9,5 @@ export class PersonUpdateInput implements Partial<PersonTypes.Person> {
   email?: string;
   phone?: string;
   password?: string;
-  roles?: PersonTypes.Role;
+  role?: Role;
 }

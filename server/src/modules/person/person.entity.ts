@@ -1,5 +1,6 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 import PersonTypes from './person-types';
+import { Role } from '../auth/roles.enum';
 
 @Entity('persons')
 export class Person implements PersonTypes.Person {
@@ -19,6 +20,6 @@ export class Person implements PersonTypes.Person {
   phone?: string;
   @Column({ type: 'varchar', nullable: true })
   email?: string;
-  @Column({ type: 'varchar', default: 'CLIENT' as PersonTypes.Role })
-  roles: PersonTypes.Role;
+  @Column({ type: 'enum', enum: Role, default: Role.CLIENT })
+  role: Role;
 }

@@ -1,3 +1,5 @@
+import { Role } from '../auth/roles.enum';
+
 declare module PersonTypes {
   interface Person {
     id: number;
@@ -8,10 +10,8 @@ declare module PersonTypes {
     middleName?: string;
     phone?: string;
     email?: string;
-    roles: Role;
+    role: Role;
   }
-
-  type Role = 'ADMIN' | 'MANAGER' | 'CLIENT';
 }
 
 export default PersonTypes;

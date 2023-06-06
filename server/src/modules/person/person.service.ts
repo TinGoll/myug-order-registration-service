@@ -13,6 +13,7 @@ import { PersonCreateInput } from './inputs/create.input';
 import { PersonUpdateInput } from './inputs/update.input';
 import { PersonLoginInput } from './inputs/login.input';
 import PersonTypes from './person-types';
+import { Role } from '../auth/roles.enum';
 
 @Injectable()
 export class PersonService {
@@ -53,14 +54,23 @@ export class PersonService {
         if (!person) {
           return of(null);
         }
-        if (Number(person.id) !== Number(user.id)) {
+
+        if (Number(person.id) !== Number(user.id) && user.role !== Role.ADMIN) {
           throw new HttpException(
             `Недостаточно прав для изменения данных другого пользователя`,
             HttpStatus.FORBIDDEN,
           );
         }
+
         const { password, ...data } = input;
         const updateData = { ...data } as Partial<PersonTypes.Person>;
+
+        if (Boolean(updateData.role) && user.role !== Role.ADMIN) {
+          throw new HttpException(
+            `Недостаточно прав для изменения роли пользователя`,
+            HttpStatus.FORBIDDEN,
+          );
+        }
 
         if (password) {
           return this.authService.hashPassword(password).pipe(
@@ -124,7 +134,7 @@ export class PersonService {
           middleName: true,
           phone: true,
           email: true,
-          roles: true,
+          role: true,
           password: false,
         },
       }),
