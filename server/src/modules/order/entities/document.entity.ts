@@ -7,7 +7,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import OrderTypes from '../types/order-types';
+import OrderTypes from '../../../cammon/types/order-types';
 import { OrderElement } from './element.entity';
 import { Order } from './order.entity';
 

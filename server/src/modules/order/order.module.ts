@@ -5,7 +5,6 @@ import { OrderController } from './controllers/order.controller';
 import { OrderGateway } from './gateway/order.gateway';
 import { OrderDocument } from './entities/document.entity';
 import { OrderElement } from './entities/element.entity';
-import { Nomenclature } from './entities/nomenclature.entity';
 import { Order } from './entities/order.entity';
 
 @Module({
@@ -14,7 +13,6 @@ import { Order } from './entities/order.entity';
       Order,
       OrderDocument,
       OrderElement,
-      Nomenclature,
     ]),
   ],
   providers: [OrderService, OrderGateway],

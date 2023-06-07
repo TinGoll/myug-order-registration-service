@@ -8,7 +8,7 @@ import {
   ManyToOne,
   JoinColumn,
 } from 'typeorm';
-import OrderTypes from '../types/order-types';
+import OrderTypes from '../../../cammon/types/order-types';
 import { OrderDocument } from './document.entity';
 import { Person } from '../../person/person.entity';
 

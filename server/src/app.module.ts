@@ -4,10 +4,16 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { OrderModule } from './modules/order/order.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { PersonModule } from './modules/person/person.module';
+import { CacheModule } from '@nestjs/cache-manager';
 import { HdbkModule } from './modules/hdbk/hdbk.module';
 
 @Module({
   imports: [
+    CacheModule.register({
+      isGlobal: true,
+      max: 20,
+      ttl: 3600000,
+    }),
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: `../.env`,

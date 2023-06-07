@@ -1,5 +1,5 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
-import OrderTypes from '../types/order-types';
+import OrderTypes from '../../../cammon/types/order-types';
 
 @Entity('nomenclatures')
 export class Nomenclature implements OrderTypes.Nomenclature {

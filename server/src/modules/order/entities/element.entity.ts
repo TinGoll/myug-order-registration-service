@@ -1,12 +1,10 @@
 import {
   Column,
   Entity,
-  JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import OrderTypes from '../types/order-types';
-import { Nomenclature } from './nomenclature.entity';
+import OrderTypes from '../../../cammon/types/order-types';
 import { OrderDocument } from './document.entity';
 
 @Entity('elements')
@@ -20,11 +18,9 @@ export class OrderElement implements OrderTypes.Element {
   @Column({ type: 'jsonb', default: [] })
   components: OrderTypes.Component<object>[];
 
-  @ManyToOne((nomenclature) => Nomenclature, {
-    onDelete: 'SET NULL',
-  })
-  @JoinColumn({ name: 'nomenclatureId' })
+  @Column({ type: 'jsonb', default: null, nullable: true })
   nomenclature: OrderTypes.Nomenclature;
+
   @ManyToOne(() => OrderDocument, (document) => document.elements, {
     onDelete: 'CASCADE',
   })

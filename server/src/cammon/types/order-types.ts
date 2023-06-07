@@ -42,15 +42,15 @@ declare module OrderTypes {
 
   interface Material {
     id: number;
-    name?: string;
-    type?: MaterialType | null;
+    name: string;
+    type: MaterialType | null;
   }
 
   interface FacadeModel {
     id: number;
     name: string;
     assemblyAngle: AssemblyAngle;
-    profileWidth: number | number[];
+    profileWidth: number[];
   }
 
   interface PanelModel {
