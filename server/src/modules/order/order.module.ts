@@ -8,11 +8,12 @@ import { OrderElement } from './entities/element.entity';
 import { Order } from './entities/order.entity';
 import { DocumentService } from './services/document.service';
 import { ElementService } from './services/element.service';
+import { OrderCreator } from './providers/order-creator';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Order, OrderDocument, OrderElement])],
-  providers: [OrderService, OrderGateway, DocumentService, ElementService],
+  providers: [OrderService, OrderGateway, DocumentService, ElementService, OrderCreator],
   controllers: [OrderController],
-  exports: [OrderService, DocumentService, ElementService],
+  exports: [],
 })
 export class OrderModule {}
