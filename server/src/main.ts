@@ -4,9 +4,10 @@ import * as fs from 'fs';
 import { ConfigService } from '@nestjs/config';
 import { HttpExceptionFilter } from './http-exception-filter/http-exception.filter';
 
+const whitelist = [];
+
 async function bootstrap() {
   const httpsOptions = getHttpsOptions();
-
   const app = await NestFactory.create(AppModule, {
     httpsOptions,
   });
@@ -16,11 +17,11 @@ async function bootstrap() {
 
   app.enableCors({
     origin: (origin, callback) => {
-      if (origin) {
+      if (!origin || whitelist.indexOf(origin) !== -1) {
         callback(null, true);
       } else {
         console.log('blocked cors for:', origin);
-        callback(null, true);
+        callback(null, false);
       }
     },
     allowedHeaders:

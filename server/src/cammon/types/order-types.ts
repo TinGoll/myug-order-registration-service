@@ -40,6 +40,18 @@ declare module OrderTypes {
     deleted: boolean;
   }
 
+  interface CreateOrderInput extends Partial<Order> {}
+  interface UpdateOrderInput extends Partial<Order> {
+    id: number;
+  }
+  interface CreateDocumentInput extends Partial<Document> {}
+  interface UpdateDocumentInput extends Partial<Document> {
+    id: number;
+  }
+  interface UpdateElementInput extends Partial<Element> {
+    id: number;
+  }
+
   interface Material {
     id: number;
     name: string;
