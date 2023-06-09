@@ -5,16 +5,16 @@ const componentKeys = ['geometry', 'price'] as const;
 declare module OrderTypes {
   interface Order {
     id: number;
-    itmId?: number | null;
-    clientNumner?: string | null;
-    author?: Author | null;
-    client?: Client | null;
+    itmId: number | null;
+    clientNumner: string | null;
+    author: Author | null;
+    client: Client | null;
     manager: Manager | null;
-    createdAt?: Date | string;
-    updatedAt?: Date | string;
+    createdAt: Date | string;
+    updatedAt: Date | string;
     status: Status | null;
     result: OrderResult;
-    documents?: Document[];
+    documents: Document[];
     deleted: boolean;
   }
 
@@ -94,6 +94,7 @@ declare module OrderTypes {
     note: string;
     nomenclature: Nomenclature;
     components: Component[];
+    document: Document;
   }
 
   interface Nomenclature {

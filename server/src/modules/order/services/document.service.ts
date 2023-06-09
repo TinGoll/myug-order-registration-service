@@ -44,5 +44,7 @@ export class DocumentService {
       return;
     }
   }
-  save(entity: OrderDocument) {}
+  save(entity: OrderDocument) {
+    return from(this.repository.save(entity));
+  }
 }

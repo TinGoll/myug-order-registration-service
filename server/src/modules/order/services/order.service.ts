@@ -10,7 +10,7 @@ type FindProps = {
   where?: FindOptionsWhere<Order>;
   relations?: FindOptionsRelations<Order>;
 };
-type FindManyProps = FindProps & { skip?: number; take: number };
+type FindManyProps = FindProps & { skip?: number; take?: number };
 
 @Injectable()
 export class OrderService {
@@ -70,7 +70,7 @@ export class OrderService {
     relations,
     skip,
     take,
-  }: FindManyProps): Observable<Order[]> {
+  }: FindManyProps = {}): Observable<Order[]> {
     return from(
       this.repository.find({
         where,
@@ -87,7 +87,9 @@ export class OrderService {
       return from(this.findOne({ where: { id: entity } })).pipe(
         switchMap((order) => {
           if (order) {
-            return this.update({ id: order.id, deleted: true });
+            return this.update({ id: order.id, deleted: true }).pipe(
+              map(() => order.id),
+            );
           }
           return of(null);
         }),

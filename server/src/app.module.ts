@@ -6,6 +6,7 @@ import { AuthModule } from './modules/auth/auth.module';
 import { PersonModule } from './modules/person/person.module';
 import { CacheModule } from '@nestjs/cache-manager';
 import { HdbkModule } from './modules/hdbk/hdbk.module';
+import { OrderProcessingModule } from './modules/order-processing/order-processing.module';
 
 @Module({
   imports: [
@@ -42,6 +43,7 @@ import { HdbkModule } from './modules/hdbk/hdbk.module';
     AuthModule,
     PersonModule,
     HdbkModule,
+    OrderProcessingModule,
   ],
   controllers: [],
   providers: [],

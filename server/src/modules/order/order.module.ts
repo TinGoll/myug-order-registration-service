@@ -9,10 +9,20 @@ import { Order } from './entities/order.entity';
 import { DocumentService } from './services/document.service';
 import { ElementService } from './services/element.service';
 import { OrderCreator } from './providers/order-creator';
+import { OrderProcessingModule } from '../order-processing/order-processing.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Order, OrderDocument, OrderElement])],
-  providers: [OrderService, OrderGateway, DocumentService, ElementService, OrderCreator],
+  imports: [
+    TypeOrmModule.forFeature([Order, OrderDocument, OrderElement]),
+    OrderProcessingModule,
+  ],
+  providers: [
+    OrderService,
+    OrderGateway,
+    DocumentService,
+    ElementService,
+    OrderCreator,
+  ],
   controllers: [OrderController],
   exports: [],
 })
