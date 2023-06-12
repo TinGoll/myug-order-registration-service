@@ -3,7 +3,8 @@ import { OrderService } from '../services/order.service';
 import { DocumentService } from '../services/document.service';
 import { ElementService } from '../services/element.service';
 import OrderTypes from 'src/cammon/types/order-types';
-import { Observable, concatMap, forkJoin, map, of } from 'rxjs';
+import { Observable, concatMap, forkJoin, map, of, switchMap } from 'rxjs';
+import { OrderProcessing } from 'src/modules/order-processing/order-processing';
 
 @Injectable()
 export class OrderCreator {
@@ -11,7 +12,15 @@ export class OrderCreator {
     private readonly orderService: OrderService,
     private readonly documentService: DocumentService,
     private readonly elementService: ElementService,
+    private readonly orderProcessing: OrderProcessing,
   ) {}
+
+  /** Одноразовая обработка заказа с сохранием и возвратом данных */
+  once(order: OrderTypes.Order): Observable<OrderTypes.Order> {
+    return this.orderProcessing
+      .once(order)
+      .pipe(switchMap((processedOrder) => this.saveOrder(processedOrder)));
+  }
 
   saveOrder(order: OrderTypes.Order): Observable<OrderTypes.Order> {
     return this.orderService.save(order).pipe(

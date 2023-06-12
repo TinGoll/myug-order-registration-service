@@ -3,9 +3,9 @@ import { Entity } from 'yug-entity-component-system';
 
 export class EngineEntity extends Entity {
   constructor(
-    private readonly element: OrderTypes.Element,
-    private readonly document: OrderTypes.Document,
-    private readonly order: OrderTypes.Order,
+    public readonly element: OrderTypes.Element,
+    public readonly document: OrderTypes.Document,
+    public readonly order: OrderTypes.Order,
   ) {
     super();
   }

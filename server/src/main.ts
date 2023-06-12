@@ -7,7 +7,7 @@ import { HttpExceptionFilter } from './http-exception-filter/http-exception.filt
 const whitelist = [];
 
 async function bootstrap() {
-  const httpsOptions = getHttpsOptions();
+  const httpsOptions = getHttpsOptions('massiv-yug.ru');
   const app = await NestFactory.create(AppModule, {
     httpsOptions,
   });
@@ -36,13 +36,11 @@ async function bootstrap() {
 }
 bootstrap();
 
-function getHttpsOptions() {
+function getHttpsOptions(domain: string) {
   try {
     return {
-      key: fs.readFileSync('/etc/letsencrypt/live/facade-good.ru/privkey.pem'),
-      cert: fs.readFileSync(
-        '/etc/letsencrypt/live/facade-good.ru/fullchain.pem',
-      ),
+      key: fs.readFileSync(`/etc/letsencrypt/live/${domain}/privkey.pem`),
+      cert: fs.readFileSync(`/etc/letsencrypt/live/${domain}/fullchain.pem`),
     };
   } catch (error) {
     console.log('Ошибка получения ключей:', error.message);

@@ -109,7 +109,7 @@ declare module OrderTypes {
 
   interface Component<T extends object = object> {
     name: ComponentKey;
-    data: T;
+    data?: T;
   }
 
   interface Geometry {
