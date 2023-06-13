@@ -7,6 +7,7 @@ import { PersonModule } from './modules/person/person.module';
 import { CacheModule } from '@nestjs/cache-manager';
 import { HdbkModule } from './modules/hdbk/hdbk.module';
 import { OrderProcessingModule } from './modules/order-processing/order-processing.module';
+import { PriceModule } from './modules/price/price.module';
 
 @Module({
   imports: [
@@ -44,6 +45,7 @@ import { OrderProcessingModule } from './modules/order-processing/order-processi
     PersonModule,
     HdbkModule,
     OrderProcessingModule,
+    PriceModule,
   ],
   controllers: [],
   providers: [],
