@@ -3,6 +3,12 @@
 */build
 */node_modules
 
+
+client/.cache/
+*/public
+client/src/gatsby-types.d.ts
+
+
 .env
 *.env
 .env.*
