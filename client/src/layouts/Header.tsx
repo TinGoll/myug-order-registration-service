@@ -1,10 +1,9 @@
-
-import { AppBar, Toolbar, IconButton, Typography, InputBase, Box } from "@mui/material";
+import { AppBar, Toolbar, IconButton, Typography, InputBase, Box, Container } from "@mui/material";
 import { styled, alpha } from "@mui/material/styles";
 import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
 import React from "react";
-
+import SvgMYugLogo from "../assets/svg/logo/myug-logo";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -47,25 +46,48 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
+const StyledToolbar = styled(Toolbar)(({ theme }) => ({
+  alignItems: "flex-start",
+  // Override media queries injected by theme.mixins.toolbar
+}));
+
+const Offset = styled("div")(({ theme }) => theme.mixins.toolbar);
+
 const Header = () => {
   return (
     <Box component='header' sx={{ flexGrow: 1 }}>
-      <AppBar component='nav' position='fixed' sx={{ color: "red" }} >
-        <Toolbar>
-          <IconButton size='large' edge='start' color='inherit' aria-label='open drawer' sx={{ mr: 2 }}>
-            <MenuIcon />
-          </IconButton>
-          <Typography variant='h6' noWrap component='div' sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}>
-            MUI
-          </Typography>
-          <Search>
-            <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper>
-            <StyledInputBase placeholder='Search…' inputProps={{ "aria-label": "search" }} />
-          </Search>
-        </Toolbar>
+      <AppBar component='nav' position='fixed' sx={{}}>
+        <Container>
+          <Toolbar>
+            <IconButton size='large' edge='start' color='inherit' aria-label='open drawer' sx={{ mr: 2 }}>
+              <SvgMYugLogo />
+            </IconButton>
+  
+            <Typography
+              variant='h4'
+              noWrap
+              component='div'
+              textTransform='uppercase'
+              sx={{ flexGrow: 1, display: { xs: "none", sm: "block" }, fontFamily: "Orchidea Pro" }}
+            >
+              Массив-юг
+            </Typography>
+            {/* <IconButton size='large' edge='start' color='inherit' aria-label='open drawer' sx={{ mr: 2 }}>
+              <MenuIcon />
+            </IconButton>
+            <Typography variant='h6' noWrap component='div' sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}>
+              MUI
+            </Typography> */}
+            <Search>
+              <SearchIconWrapper>
+                <SearchIcon />
+              </SearchIconWrapper>
+              <StyledInputBase placeholder='Search…' inputProps={{ "aria-label": "search" }} />
+            </Search>
+          </Toolbar>
+        </Container>
       </AppBar>
+      <Offset />
     </Box>
   );
 };

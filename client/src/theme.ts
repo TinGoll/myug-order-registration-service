@@ -1,10 +1,4 @@
-import { createTheme, Theme, ThemeOptions } from "@mui/material/styles";
-
-
-// declare module "@mui/material/styles/createPalette" {
-//   interface CommonColors {}
-//   interface PaletteOptions {}
-// }
+import { createTheme, ThemeOptions } from "@mui/material/styles";
 
 declare module "@mui/material/styles" {
   interface Theme {
@@ -12,15 +6,12 @@ declare module "@mui/material/styles" {
       danger: string;
     };
   }
-  // allow configuration using `createTheme`
   interface ThemeOptions {
     status?: {
       danger?: string;
     };
   }
 }
-
-
 
 export const themeOptions: ThemeOptions = {
   palette: {
@@ -36,6 +27,23 @@ export const themeOptions: ThemeOptions = {
     },
     warning: {
       main: "#833d04",
+    },
+  },
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 600,
+      md: 900,
+      lg: 1200,
+      xl: 1536,
+    },
+  },
+  mixins: {
+    toolbar: {
+      minHeight: 90,
+      "@media (min-width:600px)": {
+        minHeight: 138,
+      },
     },
   },
 };
