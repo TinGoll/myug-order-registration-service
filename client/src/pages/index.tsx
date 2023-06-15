@@ -1,7 +1,7 @@
 import * as React from "react";
 import type { HeadFC, PageProps } from "gatsby";
 import { Button, useTheme } from "@mui/material";
-import Layout from "../layouts/layout";
+import Layout from "../layouts/Layout";
 
 // import { useTheme } from "@mui/material/styles";
 
@@ -9,7 +9,7 @@ const IndexPage: React.FC<PageProps> = () => {
   const theme = useTheme();
 
   return (
-    <Layout sx={{ }} >
+    <Layout sx={{}}>
       Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum ex odio iste distinctio voluptas, est amet
       mollitia! Ipsa voluptas beatae nostrum placeat necessitatibus maiores nihil porro ut? Minus reiciendis obcaecati
       ullam officiis neque laboriosam vero, tempore id! Odio placeat animi aperiam dolor repellendus recusandae debitis
