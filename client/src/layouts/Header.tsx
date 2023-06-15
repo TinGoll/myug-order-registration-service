@@ -1,9 +1,43 @@
-import { AppBar, Toolbar, IconButton, Typography, InputBase, Box, Container } from "@mui/material";
+import {
+  AppBar,
+  Toolbar,
+  IconButton,
+  Typography,
+  InputBase,
+  Box,
+  Container,
+  useScrollTrigger,
+  Slide,
+} from "@mui/material";
 import { styled, alpha } from "@mui/material/styles";
 import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
 import React from "react";
 import SvgMYugLogo from "../assets/svg/logo/myug-logo";
+
+interface Props {
+  children: React.ReactElement;
+}
+
+function ElevationScroll(props: Props) {
+  const { children } = props;
+  const trigger = useScrollTrigger({
+    disableHysteresis: true,
+    threshold: 128,
+  });
+
+  console.log("trigger", trigger);
+
+  //  return (
+  //    <Slide appear={false} direction='down' in={!trigger}>
+  //      {children}
+  //    </Slide>
+  //  );
+
+  return React.cloneElement(children, {
+    elevation: trigger ? 4 : 0,
+  });
+}
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -46,23 +80,20 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-const StyledToolbar = styled(Toolbar)(({ theme }) => ({
-  alignItems: "flex-start",
-  // Override media queries injected by theme.mixins.toolbar
-}));
+const StyledToolbar = styled(Toolbar)(({ theme }) => ({}));
 
 const Offset = styled("div")(({ theme }) => theme.mixins.toolbar);
 
 const Header = () => {
   return (
     <Box component='header' sx={{ flexGrow: 1 }}>
-      <AppBar component='nav' position='fixed' sx={{}}>
+      <AppBar component='nav' position='fixed' sx={{  }}>
         <Container>
-          <Toolbar>
+          <StyledToolbar>
             <IconButton size='large' edge='start' color='inherit' aria-label='open drawer' sx={{ mr: 2 }}>
               <SvgMYugLogo />
             </IconButton>
-  
+
             <Typography
               variant='h4'
               noWrap
@@ -84,7 +115,7 @@ const Header = () => {
               </SearchIconWrapper>
               <StyledInputBase placeholder='Search…' inputProps={{ "aria-label": "search" }} />
             </Search>
-          </Toolbar>
+          </StyledToolbar>
         </Container>
       </AppBar>
       <Offset />
