@@ -15,7 +15,13 @@ const wrapper = ({ element }) => {
     <Provider store={store}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <GlobalStyles styles={{}} />
+        <GlobalStyles
+          styles={{
+            html: {
+              scrollBehavior: "smooth",
+            },
+          }}
+        />
         {element}
       </ThemeProvider>
     </Provider>
