@@ -7,13 +7,18 @@ import {
   Box,
   Container,
   useScrollTrigger,
-  Slide,
+  Button,
 } from "@mui/material";
 import { styled, alpha } from "@mui/material/styles";
-import MenuIcon from "@mui/icons-material/Menu";
+
 import SearchIcon from "@mui/icons-material/Search";
-import React from "react";
+import React, { FC } from "react";
 import SvgMYugLogo from "../assets/svg/logo/myug-logo";
+
+interface ISticky {
+  sticky?: string;
+  stickyforce?: string;
+}
 
 interface Props {
   children: React.ReactElement;
@@ -23,25 +28,19 @@ function ElevationScroll(props: Props) {
   const { children } = props;
   const trigger = useScrollTrigger({
     disableHysteresis: true,
-    threshold: 128,
+    threshold: 32,
   });
-
-  console.log("trigger", trigger);
-
-  //  return (
-  //    <Slide appear={false} direction='down' in={!trigger}>
-  //      {children}
-  //    </Slide>
-  //  );
 
   return React.cloneElement(children, {
     elevation: trigger ? 4 : 0,
+    sticky: trigger ? "true" : "false",
   });
 }
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
   borderRadius: theme.shape.borderRadius,
+  // border: `0.08em solid ${alpha(theme.palette.primary.main, 0.25)}`,
   backgroundColor: alpha(theme.palette.common.white, 0.15),
   "&:hover": {
     backgroundColor: alpha(theme.palette.common.white, 0.25),
@@ -82,42 +81,86 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 const StyledToolbar = styled(Toolbar)(({ theme }) => ({}));
 
+const StyledAppBar = styled(AppBar)<ISticky>(({ theme, sticky, stickyforce }) => ({
+  background: stickyforce === "true" || sticky === "true" ? undefined : "none transparent",
+  transition: theme.transitions.create(["background"], {
+    duration: theme.transitions.duration.standard,
+  }),
+  // color: stickyforce === "true" || sticky === "true" ? "white" : theme.palette.primary.main,
+}));
+
 const Offset = styled("div")(({ theme }) => theme.mixins.toolbar);
 
-const Header = () => {
+const Header: FC<ISticky> = ({ stickyforce }) => {
+  const goHomeHandler = () => {
+    console.log("Реализация перехода на главную");
+  };
+
   return (
     <Box component='header' sx={{ flexGrow: 1 }}>
-      <AppBar component='nav' position='fixed' sx={{  }}>
-        <Container>
-          <StyledToolbar>
-            <IconButton size='large' edge='start' color='inherit' aria-label='open drawer' sx={{ mr: 2 }}>
-              <SvgMYugLogo />
-            </IconButton>
+      <ElevationScroll>
+        <StyledAppBar stickyforce={String(stickyforce)} position='fixed'>
+          <Container>
+            <StyledToolbar>
+              <IconButton
+                onClick={goHomeHandler}
+                size='large'
+                edge='start'
+                color='inherit'
+                aria-label='open drawer'
+                sx={{ mr: 2 }}
+              >
+                <SvgMYugLogo />
+              </IconButton>
+              <Box
+                onClick={goHomeHandler}
+                sx={{
+                  mr: 4,
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "start",
+                  alignItems: "start",
+                  paddingTop: 2,
+                  cursor: "pointer",
+                }}
+              >
+                <Typography
+                  variant='h4'
+                  noWrap
+                  component='div'
+                  textTransform='uppercase'
+                  sx={{ display: { xs: "none", sm: "block" }, fontFamily: "Orchidea Pro" }}
+                >
+                  Массив-юг
+                </Typography>
+                <Typography
+                  variant='caption'
+                  noWrap
+                  component='div'
+                  textTransform='uppercase'
+                  sx={(theme) => ({
+                    display: { xs: "none", sm: "block" },
+                    fontSize: 10,
+                    color: theme.palette.grey[400],
+                  })}
+                >
+                  от идеи до воплощения в каждой мелочи
+                </Typography>
+              </Box>
+              <Box sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}></Box>
 
-            <Typography
-              variant='h4'
-              noWrap
-              component='div'
-              textTransform='uppercase'
-              sx={{ flexGrow: 1, display: { xs: "none", sm: "block" }, fontFamily: "Orchidea Pro" }}
-            >
-              Массив-юг
-            </Typography>
-            {/* <IconButton size='large' edge='start' color='inherit' aria-label='open drawer' sx={{ mr: 2 }}>
-              <MenuIcon />
-            </IconButton>
-            <Typography variant='h6' noWrap component='div' sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}>
-              MUI
-            </Typography> */}
-            <Search>
-              <SearchIconWrapper>
-                <SearchIcon />
-              </SearchIconWrapper>
-              <StyledInputBase placeholder='Search…' inputProps={{ "aria-label": "search" }} />
-            </Search>
-          </StyledToolbar>
-        </Container>
-      </AppBar>
+
+
+              {/* <Search>
+                <SearchIconWrapper>
+                  <SearchIcon />
+                </SearchIconWrapper>
+                <StyledInputBase placeholder='Search…' inputProps={{ "aria-label": "search" }} />
+              </Search> */}
+            </StyledToolbar>
+          </Container>
+        </StyledAppBar>
+      </ElevationScroll>
       <Offset />
     </Box>
   );

@@ -6,12 +6,13 @@ import { Box, SxProps } from "@mui/material";
 interface Props {
   children?: React.ReactNode;
   sx?: SxProps;
+  headerSticky?: boolean;
 }
 
-const Layout: FC<Props> = ({ children }) => {
+const Layout: FC<Props> = ({ children, headerSticky }) => {
   return (
     <React.Fragment>
-      <Header />
+      <Header stickyforce={String(headerSticky)} />
       <Box component='main'>{children}</Box>
       <Footer />
     </React.Fragment>
