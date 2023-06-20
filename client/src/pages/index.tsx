@@ -2,6 +2,7 @@ import * as React from "react";
 import type { HeadFC, PageProps } from "gatsby";
 import Layout from "../layouts/Layout";
 import { Container } from "@mui/material";
+import AppTest from "../features/test-code";
 
 type Props<T extends React.ElementType> = {
   component?: T;
@@ -19,6 +20,7 @@ const IndexPage: React.FC<PageProps> = ({ uri }) => {
       <Container>
         Lorem ipsum dolor sit amet.
         <MYComponent  component="button" >Привет</MYComponent>
+        <AppTest />
       </Container>
     </Layout>
   );
