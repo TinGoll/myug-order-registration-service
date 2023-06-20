@@ -32,31 +32,52 @@ interface IButtonProps {
 
 /////////////////////////////////////////////////////////////////////
 
-const useThrottle = (
-  callback: () => void,
+//кастомный хук useThrottle
+
+// Определяем тип функции - аргумента.
+type ThrottledFunction<T extends any[]> = (...args: T) => void
+
+const useThrottle = <T extends any[]>(
+  callback: ThrottledFunction<T>,
   delay: number,
-  dependencies: any[],
-) => {
-  // Для сохранения timeoutId
-  const timerRef = useRef<NodeJS.Timeout>()
+): ThrottledFunction<T> => {
+  //
+  const timeoutIdRef = useRef<NodeJS.Timeout | null>(null) // Создадим реф для хранения timeoutId
+  const argsRef = useRef<any[]>([]) // Создаем реф для хранения аргументов фанкции-аргумента :)
+  // Используем useCallback, для кэширования функции
+  const throttledCallback = useCallback(
+    (...args: T) => {
+      argsRef.current = args // Записываем аргументы, для отложенного вызова
+      if (!timeoutIdRef.current) {
+        callback(...args) // вызываем переданную функцию, если нет текущего таймера.
+
+        timeoutIdRef.current = setTimeout(() => {
+          timeoutIdRef.current = null
+          if (argsRef.current.length > 0) {
+            throttledCallback(...(argsRef.current as T))
+            argsRef.current = []
+          }
+        }, delay)
+      }
+    },
+    [callback, delay],
+  )
 
   useEffect(() => {
-    if (timerRef.current) {
-      clearTimeout(timerRef.current) // очищаем предыдущий.
-    }
-    // вызываем callback по истечению времени.
-    timerRef.current = setTimeout(callback, delay)
     return () => {
-      if (timerRef.current) {
-        clearTimeout(timerRef.current)
+      if (timeoutIdRef.current) {
+        clearTimeout(timeoutIdRef.current)
+        timeoutIdRef.current = null
       }
     }
-  }, dependencies)
+  }, [])
+
+  return throttledCallback
 }
 
 /**
  * Для кеширования, можно использовать стандартнный флаг - cache,
- * передав его в аргументе options функции fetch, но для примера
+ * передав его во втором аргументе options функции fetch, но для примера
  * напишем свой класс для кеширования, на основании  коллекции Мap.
  */
 class CustomCache extends Map<string, { timeout: number; data: any }> {
@@ -93,8 +114,7 @@ class CustomCache extends Map<string, { timeout: number; data: any }> {
 const customCache = new CustomCache().setTimeout(5000)
 
 /**
- * Декомпозируем логику запроса данных в отдельную функцию,
- * для переиспользования или при необходимости изменить метод получения данных.
+ * Декомпозируем логику запроса данных в отдельную функцию (сервис),
  * Так же, реализуем кеширование ответов.
  * @param url адрес запроса, типа {@link string}
  * @returns Promise с полезной нагрузкой, типа <T>
@@ -120,7 +140,7 @@ interface IUserInfoProps {
   user: User | null
 }
 
-function Button({ onClick }: IButtonProps): React.JSX.Element {
+function Button({ onClick }: IButtonProps) {
   return (
     <button type="button" onClick={onClick}>
       get random user
@@ -147,29 +167,15 @@ function UserInfo({ user }: IUserInfoProps) {
   )
 }
 
-// Передаем вторым аргументом функцию обратного вызова,
-// для определения необходимости рендера компонента.
-// В данном случае, если выводимые данные совпадают, рендер не целесообразен.
-// (Решение в большей степени несет демонстративный характер, функция shallowEqual сработает идентично.)
-const MemoizedUserInfo = memo(
-  UserInfo,
-  ({ user: prevUser }, { user: newUser }) => {
-    return !(
-      // Пишем свою логику любой сложности.
-      (prevUser?.name !== newUser?.name || prevUser?.phone !== newUser?.phone)
-    )
-  },
-)
+const MemoizedUserInfo = memo(UserInfo)
 
 function App(): JSX.Element {
   // Не увидел целесообразности использовать утилиту Record
   // поэтому в качестве дженерика указал тип User или null
   const [item, setItem] = useState<User | null>(null)
-  // Создаем дополнительный стейт для вывода текста ошибки запроса.
+  // Создал дополнительный стейт для вывода текста ошибки запроса.
   const [error, setError] = useState<string>("")
 
-  // Используем хук useCallback, для предотствращения
-  // создания новой функции receiveRandomUser при каждом рендере.
   const receiveRandomUser = useCallback(async () => {
     try {
       const id = Math.floor(Math.random() * (10 - 1)) + 1
@@ -177,20 +183,17 @@ function App(): JSX.Element {
       setItem(_user)
       setError("")
     } catch (err: any) {
-      setError(err.message) // Задаем текст ошибки.
+      setError(err.message)
       setItem(null)
     }
   }, [])
 
-  // Так же оборачиваем в функцию useCallback, во избежании
-  // перерендера дочернего компонента Button. В качестве зависимостей,
-  // передадим функцию receiveRandomUser.
-  const handleButtonClick = useCallback(
+  const handleButtonClick = useThrottle(
     (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
       event.stopPropagation()
-      useThrottle(receiveRandomUser, 2000, [])
+      receiveRandomUser()
     },
-    [receiveRandomUser],
+    1000,
   )
 
   return (
