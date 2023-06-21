@@ -32,6 +32,20 @@ interface IButtonProps {
 
 /////////////////////////////////////////////////////////////////////
 
+type PropsMYComponent<T extends React.ElementType> = {
+  component?: T
+  children?: React.ReactNode
+} & React.ComponentPropsWithoutRef<T>
+
+function MYComponent<T extends React.ElementType>({
+  component,
+  children,
+  ...props
+}: PropsMYComponent<T>): React.JSX.Element {
+  const Component = component || "div"
+  return <Component {...props}>{children}</Component>
+}
+
 function debounce<F extends (...args: any[]) => void>(f: F, ms: number) {
   let isCooldown = false
 
@@ -42,7 +56,6 @@ function debounce<F extends (...args: any[]) => void>(f: F, ms: number) {
     setTimeout(() => (isCooldown = false), ms)
   }
 }
-
 
 const useThrottle = (
   callback: () => void,
