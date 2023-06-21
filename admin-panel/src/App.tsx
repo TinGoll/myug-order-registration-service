@@ -32,17 +32,6 @@ interface IButtonProps {
 
 /////////////////////////////////////////////////////////////////////
 
-function debounce<F extends (...args: any[]) => void>(f: F, ms: number) {
-  let isCooldown = false
-  return function (...args: Parameters<F>) {
-    if (isCooldown) return
-    f.apply(null, args)
-    isCooldown = true
-    setTimeout(() => (isCooldown = false), ms)
-  }
-}
-
-
 const useThrottle = (
   callback: () => void,
   delay: number,
