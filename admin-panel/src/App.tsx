@@ -37,6 +37,9 @@ type PropsMYComponent<T extends React.ElementType> = {
   children?: React.ReactNode
 } & React.ComponentPropsWithoutRef<T>
 
+  const arr = [1, 2, 3, 4, 5, 6]
+  console.log([...arr].map([].pop, arr)) // Реверс строки
+
 function MYComponent<T extends React.ElementType>({
   component,
   children,

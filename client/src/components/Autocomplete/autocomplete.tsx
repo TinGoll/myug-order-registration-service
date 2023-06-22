@@ -9,39 +9,55 @@ type MaterialColor = "primary" | "secondary" | "error" | "info" | "success" | "w
 
 type ExtraProps = {
   color?: MaterialColor;
+  label?: string;
 };
 
 const StyledMaterialAutocomplete = styled(MaterialAutocomplete)<MaterialAutocompleteProps & ExtraProps>(
-  ({ theme, color }) => ({
+  ({ theme, color = "primary" }) => ({
+    "& label": {
+      lineHeight: "0.8em",
+      fontSize: "0.9rem",
+    },
+    "& label.Mui-focused": {
+      color: "#A0AAB4",
+      lineHeight: "1.4375em",
+      fontSize: "1rem",
+    },
+    "& .MuiFormLabel-filled": {
+      color: "#A0AAB4",
+      lineHeight: "1.4375em",
+      fontSize: "1rem",
+    },
     "& .MuiOutlinedInput-root": {
       padding: "2px 56px 2px 9px",
-      background: "red"
+      boxShadow: `none`,
     },
     "& .MuiOutlinedInput-notchedOutline": {
       border: "1px solid",
-      borderColor: theme.palette.mode === "light" ? "#E0E3E7" : "#2D3843",
+      backgroundColor: alpha(theme.palette[color].main, 0.02),
+      borderColor: alpha(theme.palette[color].main, 0.2),
     },
     "&:hover .MuiOutlinedInput-notchedOutline": {
-      borderWidth: "2px",
-      borderColor: "blue",
+      border: "2px solid",
+      borderColor: alpha(theme.palette[color].main, 0.3),
     },
     "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-      borderWidth: "2px",
-      borderColor: "blue",
+      transition: theme.transitions.create(["border-color", "background-color", "box-shadow"]),
+      boxShadow: `${alpha(theme.palette[color].main, 0.15)} 0 0 0 0.2rem`,
+      borderColor: `${alpha(theme.palette[color].main, 0.3)}`,
     },
   })
 );
 
-const Autocomplete = ({ color, ...props }: Omit<MaterialAutocompleteProps, "renderInput"> & ExtraProps) => {
-
-
-
+const Autocomplete = ({ color, label, ...props }: Omit<MaterialAutocompleteProps, "renderInput"> & ExtraProps) => {
   return (
     <StyledMaterialAutocomplete
       {...props}
       color={color}
       renderInput={(opts) => {
-        return <TextField {...opts} />;
+        console.log("opts", opts);
+
+        return <TextField {...opts} label={label} />;
       }}
     />
   );

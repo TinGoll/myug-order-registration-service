@@ -3,7 +3,7 @@ import MaterialInputBase from "@mui/material/InputBase";
 
 
 
-const InputBase = styled(MaterialInputBase)(({ theme, color = "primary"  }) => ({
+const InputBase = styled(MaterialInputBase)(({ theme, color = "primary" }) => ({
   "label + &": {
     marginTop: theme.spacing(1),
   },
@@ -28,7 +28,7 @@ const InputBase = styled(MaterialInputBase)(({ theme, color = "primary"  }) => (
       '"Segoe UI Symbol"',
     ].join(","),
     "&:focus": {
-      boxShadow: `${alpha(theme.palette[color].main, 0.15)} 0 0 0 0.2rem`,
+      boxShadow: `${alpha(theme.palette[color].main, 0.5)} 0 0 0 0.2rem`,
       borderColor: `${alpha(theme.palette[color].main, 0.3)}`,
     },
   },

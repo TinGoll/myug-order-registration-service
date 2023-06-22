@@ -12,18 +12,25 @@ const timeSlots = Array.from(new Array(24 * 2)).map(
 );
 
 const IndexPage: React.FC<PageProps> = ({ uri }) => {
+
+
   return (
     <Layout headerSticky sx={{}}>
       <Container>
         <Box>Lorem ipsum dolor sit amet.</Box>
         <InputLabel>Lorem, ipsum dolor.</InputLabel>
-        <TextField color='primary' />
-        <Autocomplete
-          id='disabled-options-demo'
-          options={timeSlots}
-          getOptionDisabled={(option) => option === timeSlots[0] || option === timeSlots[2]}
-          sx={{ width: 300 }}
-        />
+
+        <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+          <TextField color='error' label='Привет' />
+          <Autocomplete
+            id='disabled-options-demo'
+            options={timeSlots}
+            color='info'
+            label='Привет'
+            getOptionDisabled={(option) => option === timeSlots[0] || option === timeSlots[2]}
+          />
+        </Box>
+        {/* <TextField color='info' /> */}
       </Container>
     </Layout>
   );
