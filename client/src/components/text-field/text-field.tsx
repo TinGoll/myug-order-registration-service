@@ -6,6 +6,9 @@ const CssTextField = styled(MaterialTextField)(({ theme, color = "primary" }) =>
   "& .MuiInputBase-input": {
     padding: "9.5px 14px",
   },
+  "& .MuiInputBase-multiline": {
+    padding: "6px 6px",
+  },
   "& label": {
     lineHeight: "0.8em",
     fontSize: "0.9rem",
@@ -22,8 +25,8 @@ const CssTextField = styled(MaterialTextField)(({ theme, color = "primary" }) =>
   },
   "& .MuiOutlinedInput-root": {
     "& fieldset": {
-      backgroundColor: alpha(theme.palette[color].main, 0.02),
-      borderColor: alpha(theme.palette[color].main, 0.2),
+      backgroundColor: alpha(theme.palette["primary"].main, 0.02),
+      borderColor: alpha(theme.palette["primary"].main, 0.2),
       borderRadius: 4,
     },
     "&:hover fieldset": {

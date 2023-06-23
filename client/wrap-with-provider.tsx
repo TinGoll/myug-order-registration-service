@@ -20,6 +20,9 @@ const wrapper = ({ element }) => {
             html: {
               scrollBehavior: "smooth",
             },
+            body: {
+              backgroundColor: "#fafafa"
+            }
           }}
         />
         {element}

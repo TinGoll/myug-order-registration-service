@@ -1,6 +1,6 @@
 import React from "react";
 import MaterialAutocomplete, { AutocompleteProps } from "@mui/material/Autocomplete";
-import InputBase from "../InputBase/input-base";
+import InputBase from "../input-base/input-base";
 import { OutlinedInputProps, TextField, TextFieldProps, TextFieldPropsColorOverrides } from "@mui/material";
 import { alpha, styled } from "@mui/material/styles";
 
@@ -39,7 +39,7 @@ const StyledMaterialAutocomplete = styled(MaterialAutocomplete)<MaterialAutocomp
     },
     "&:hover .MuiOutlinedInput-notchedOutline": {
       border: "2px solid",
-      borderColor: alpha(theme.palette[color].main, 0.3),
+      borderColor: alpha(theme.palette[color].main, 0.25),
     },
     "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
       transition: theme.transitions.create(["border-color", "background-color", "box-shadow"]),
