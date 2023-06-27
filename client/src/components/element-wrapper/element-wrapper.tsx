@@ -3,8 +3,10 @@ import React, { FC } from "react";
 
 interface Props {
   children: React.ReactNode;
+  color?: "primary" | "secondary" | "error" | "info" | "success" | "warning";
 }
-const ElementWrapper: FC<Props> = ({ children }) => {
+
+const ElementWrapper: FC<Props> = ({ children, color = "primary" }) => {
   return (
     <Box
       sx={(theme) => ({
@@ -14,8 +16,14 @@ const ElementWrapper: FC<Props> = ({ children }) => {
         padding: "1px 14px",
         border: "1px solid",
         borderRadius: "4px",
-        backgroundColor: alpha(theme.palette["primary"].main, 0.02),
-        borderColor: alpha(theme.palette["primary"].main, 0.2),
+        backgroundColor: alpha(theme.palette[color].main, 0.02),
+        borderColor: alpha(theme.palette[color].main, 0.2),
+        ":hover": {
+          // border: "1px solid",
+          // borderColor: `${alpha(theme.palette[color].main, 0.3)}`,
+          outline: `1px solid ${alpha(theme.palette[color].main, 0.3)}`,
+          backgroundColor: alpha(theme.palette[color].main, 0.01),
+        },
       })}
     >
       {children}
