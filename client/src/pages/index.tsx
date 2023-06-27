@@ -1,16 +1,14 @@
 import * as React from "react";
 import type { HeadFC, PageProps } from "gatsby";
 import Layout from "../layouts/Layout";
-import { Badge, Box, Container, FormControlLabel, Paper } from "@mui/material";
-import TextField from "../components/text-field/text-field";
-
-import InputLabel from "@mui/material/InputLabel";
-import Autocomplete from "../components/autocomplete/autocomplete";
-import Switch from "../components/switch/switch";
+import { Container } from "@mui/material";
 import OrderForm from "../blocks/order-form/order-form/order-form";
 
 const timeSlots = Array.from(new Array(24 * 2)).map(
-  (_, index) => `${index < 20 ? "0" : ""}${Math.floor(index / 2)}:${index % 2 === 0 ? "00" : "30"}`
+  (_, index) =>
+    `${index < 20 ? "0" : ""}${Math.floor(index / 2)}:${
+      index % 2 === 0 ? "00" : "30"
+    }`
 );
 
 const IndexPage: React.FC<PageProps> = ({ uri }) => {
