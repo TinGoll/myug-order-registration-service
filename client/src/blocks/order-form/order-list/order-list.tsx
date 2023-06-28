@@ -37,6 +37,11 @@ const rows = [
   { id: 7, num: 7, nomenclature: "Фасад глухой", height: 916, width: 396, amount: 4, comment: "" },
   { id: 8, num: 8, nomenclature: "Фасад глухой", height: 916, width: 396, amount: 2, comment: "" },
   { id: 9, num: 9, nomenclature: "Фасад глухой", height: 916, width: 396, amount: 2, comment: "" },
+  { id: 10, num: 10, nomenclature: "Фасад глухой", height: 916, width: 396, amount: 2, comment: "" },
+  { id: 11, num: 11, nomenclature: "Фасад глухой", height: 916, width: 396, amount: 2, comment: "" },
+  { id: 12, num: 12, nomenclature: "Фасад глухой", height: 916, width: 396, amount: 2, comment: "" },
+  { id: 13, num: 13, nomenclature: "Фасад глухой", height: 916, width: 396, amount: 2, comment: "" },
+  { id: 14, num: 14, nomenclature: "Фасад глухой", height: 916, width: 396, amount: 2, comment: "" },
 ];
 
 export default function OrderList() {

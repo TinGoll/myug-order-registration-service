@@ -1,6 +1,6 @@
 import { Grid } from "@mui/material";
 import React, { FC } from "react";
-import Autocomplete from "../../../components/Autocomplete/autocomplete";
+import Autocomplete from "../../../components/styled-autocomplete/autocomplete";
 import TextField from "../../../components/text-field/text-field";
 
 const opt = ["Глухой", "Витрина", "Решётка"];

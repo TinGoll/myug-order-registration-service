@@ -1,7 +1,7 @@
 import React from "react";
 import MaterialAutocomplete, { AutocompleteProps } from "@mui/material/Autocomplete";
-import InputBase from "../input-base/input-base";
-import { OutlinedInputProps, TextField, TextFieldProps, TextFieldPropsColorOverrides } from "@mui/material";
+
+import { TextField, } from "@mui/material";
 import { alpha, styled } from "@mui/material/styles";
 
 type MaterialAutocompleteProps = AutocompleteProps<any, boolean, boolean, boolean, "div">;
@@ -38,7 +38,7 @@ const StyledMaterialAutocomplete = styled(MaterialAutocomplete)<MaterialAutocomp
     },
     "&:hover .MuiOutlinedInput-notchedOutline": {
       border: "2px solid",
-      borderColor: `${alpha(theme.palette[color].main, 0.3)}`,
+      borderColor: `${color === "primary" ? "#9e9e9e" : alpha(theme.palette[color].main, 0.3)}`,
       backgroundColor: alpha(theme.palette[color].main, 0.01),
     },
     "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
