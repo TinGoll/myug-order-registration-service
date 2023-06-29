@@ -13,7 +13,7 @@ import { styled, alpha } from "@mui/material/styles";
 
 import SearchIcon from "@mui/icons-material/Search";
 import React, { FC } from "react";
-import SvgMYugLogo from "../assets/svg/logo/myug-logo";
+import SvgMYugLogo from "../../assets/svg/logo/myug-logo";
 
 interface ISticky {
   sticky?: string;

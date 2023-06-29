@@ -1,6 +1,6 @@
 import React, { FC } from "react";
-import Header from "./Header";
-import Footer from "./Footer";
+import Header from "../blocks/header/Header";
+import Footer from "../blocks/footer/Footer";
 import { Box, SxProps } from "@mui/material";
 
 interface Props {
