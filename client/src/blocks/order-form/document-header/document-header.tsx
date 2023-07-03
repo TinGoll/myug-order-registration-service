@@ -39,7 +39,7 @@ const DocumentHeader = () => {
             labelPlacement='end'
             label='Термошов'
             sx={{ flex: 1 }}
-            control={<Switch defaultChecked color='warning' />}
+            control={<Switch defaultChecked={false} color='success' />}
           />
         </ElementWrapper>
       </Grid>

@@ -26,9 +26,8 @@ export const themeOptions: ThemeOptions = {
       main: "#c71668",
     },
     warning: {
-      main: "#833d04",
+      main: "#DC9D00",
     },
-    
   },
   breakpoints: {
     values: {

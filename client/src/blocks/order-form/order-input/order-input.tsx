@@ -14,7 +14,7 @@ const OrderInput: FC<Props> = () => {
           id="nomenclature-input"
           autoSelect
           options={opt}
-          color="success"
+          color="primary"
           label="Номенклатура"
         />
       </Grid>

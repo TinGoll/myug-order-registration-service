@@ -14,7 +14,6 @@ const config: GatsbyConfig = {
   },
   graphqlTypegen: true,
   plugins: [
-    "gatsby-plugin-image",
     {
       resolve: "gatsby-plugin-manifest",
       options: {
@@ -37,6 +36,7 @@ const config: GatsbyConfig = {
         },
       },
     },
+    "gatsby-plugin-image",
     "gatsby-plugin-mdx",
     "gatsby-plugin-sharp",
     "gatsby-transformer-sharp",

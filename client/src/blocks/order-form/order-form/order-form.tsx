@@ -1,4 +1,4 @@
-import { Paper } from "@mui/material";
+import { Box, Button, Paper } from "@mui/material";
 import React from "react";
 import DocumentHeader from "../document-header/document-header";
 import OrderHeader from "../order-header/order-header";
@@ -8,6 +8,12 @@ import OrderList from "../order-list/order-list";
 const OrderForm = () => {
   return (
     <>
+      <Paper elevation={1} sx={{ padding: 2, mt: 2 }}>
+        <Box sx={{ display: "flex", flexDirection: "row", justifyContent: "flex-end", alignItems: "center", gap: 2 }}>
+          <Button variant="contained" color='success'>Отправить заказ</Button>
+          <Button color='secondary'>Очистить форму</Button>
+        </Box>
+      </Paper>
       <Paper elevation={1} sx={{ padding: 2, mt: 2 }}>
         <OrderHeader />
       </Paper>

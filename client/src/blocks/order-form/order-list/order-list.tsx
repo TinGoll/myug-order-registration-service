@@ -25,7 +25,7 @@ function CustomPagination() {
   );
 }
 
-const PAGE_SIZE = 20;
+const PAGE_SIZE = 5;
 
 const rows = [
   { id: 1, num: 1, nomenclature: "Фасад глухой", height: 916, width: 396, amount: 5, comment: "" },
@@ -51,7 +51,7 @@ export default function OrderList() {
   });
 
   return (
-    <div style={{ height: 400, width: "100%" }}>
+    <div style={{ height: 350, width: "100%" }}>
       <StyledDataGrid
         color='primary'
         disableRowSelectionOnClick

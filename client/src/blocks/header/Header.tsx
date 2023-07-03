@@ -147,6 +147,7 @@ const Header: FC<ISticky> = ({ stickyforce }) => {
                   от идеи до воплощения в каждой мелочи
                 </Typography>
               </Box>
+              
               <Box sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}></Box>
 
 

@@ -19,8 +19,6 @@ const ElementWrapper: FC<Props> = ({ children, color = "primary" }) => {
         backgroundColor: alpha(theme.palette[color].main, 0.02),
         borderColor: alpha(theme.palette[color].main, 0.2),
         ":hover": {
-          // border: "1px solid",
-          // borderColor: `${alpha(theme.palette[color].main, 0.3)}`,
           outline: `1px solid ${alpha(theme.palette[color].main, 0.3)}`,
           backgroundColor: alpha(theme.palette[color].main, 0.01),
         },

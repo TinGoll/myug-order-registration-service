@@ -1,10 +1,11 @@
 import * as React from "react";
-import type { HeadFC, PageProps } from "gatsby";
-import Layout from "../layouts/Layout";
-import { Box, Container } from "@mui/material";
-import OrderForm from "../blocks/order-form/order-form/order-form";
+import { Link, type HeadFC, type PageProps } from "gatsby";
+import { Box, Button, Container, TextField, Typography } from "@mui/material";
+import { alpha } from "@mui/material/styles";
+
 import AuthLayout from "../layouts/auth-layout";
-import AuthForm from "../blocks/auth-form/auth-form";
+import AuthForm from "../blocks/auth-form/auth-form-layout";
+import AuthFormControls from "../blocks/auth-form/auth-form-controls";
 
 const IndexPage: React.FC<PageProps> = ({ uri }) => {
   return (
@@ -14,17 +15,10 @@ const IndexPage: React.FC<PageProps> = ({ uri }) => {
     >
       <Container sx={{ flex: 1 }}>
         <AuthForm.Root>
-          <AuthForm.Image />
-          <Box>
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Reiciendis corporis, voluptas vitae adipisci sit
-            voluptatem aut voluptates sed molestias non recusandae blanditiis laboriosam beatae laudantium id nam nihil
-            debitis suscipit?
-          </Box>
+          <AuthForm.Logo />
+          <AuthFormControls />
         </AuthForm.Root>
       </Container>
-      {/* <Container>
-        <OrderForm />
-      </Container> */}
     </AuthLayout>
   );
 };

@@ -25,6 +25,7 @@
     "@mui/x-data-grid": "^6.9.0",
     "@mui/x-data-grid-generator": "^6.9.0",
     "@reduxjs/toolkit": "^1.9.5",
+    "axios": "^1.4.0",
     "gatsby": "^5.10.0",
     "gatsby-plugin-image": "^3.10.0",
     "gatsby-plugin-manifest": "^5.10.0",
