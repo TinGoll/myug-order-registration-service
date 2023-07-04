@@ -58,7 +58,7 @@ const Image = styled("img")`
 
 const ImgBox = styled(Box)`
   width: 100%;
-  min-height: 40%;
+  height: 120px;
   display: flex;
   flex-direction: row;
   gap: 16px;

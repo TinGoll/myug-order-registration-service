@@ -1,7 +1,6 @@
 import * as React from "react";
-import { Link, type HeadFC, type PageProps } from "gatsby";
-import { Box, Button, Container, TextField, Typography } from "@mui/material";
-import { alpha } from "@mui/material/styles";
+import { type HeadFC, type PageProps } from "gatsby";
+import { Container } from "@mui/material";
 
 import AuthLayout from "../layouts/auth-layout";
 import AuthForm from "../blocks/auth-form/auth-form-layout";
