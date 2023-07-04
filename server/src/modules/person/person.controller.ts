@@ -3,8 +3,10 @@ import {
   Controller,
   Get,
   HttpCode,
+  Param,
   Patch,
   Post,
+  Query,
   Req,
   UseGuards,
 } from '@nestjs/common';
@@ -47,5 +49,10 @@ export class PersonController {
   @HttpCode(200)
   login(@Body() input: PersonLoginInput) {
     return this.personService.login(input);
+  }
+
+  @Get('exists')
+  exists(@Query() params: { login: string }) {
+    return this.personService.loginExists(params?.login);
   }
 }
