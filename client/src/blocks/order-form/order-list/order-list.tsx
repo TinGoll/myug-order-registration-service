@@ -5,6 +5,7 @@ import Pagination from "@mui/material/Pagination";
 import PaginationItem from "@mui/material/PaginationItem";
 import { columns } from "./order-list-columns";
 import StyledDataGrid from "./styled-data-grid";
+import { memo } from "react";
 
 function CustomPagination() {
   const apiRef = useGridApiContext();
@@ -44,7 +45,7 @@ const rows = [
   { id: 14, num: 14, nomenclature: "Фасад глухой", height: 916, width: 396, amount: 2, comment: "" },
 ];
 
-export default function OrderList() {
+function OrderList() {
   const [paginationModel, setPaginationModel] = React.useState({
     pageSize: PAGE_SIZE,
     page: 0,
@@ -68,3 +69,5 @@ export default function OrderList() {
     </div>
   );
 }
+
+export default memo(OrderList);

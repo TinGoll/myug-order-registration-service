@@ -1,5 +1,5 @@
 import { Grid } from "@mui/material";
-import React, { FC } from "react";
+import React, { FC, memo } from "react";
 import Autocomplete from "../../../components/styled-autocomplete/autocomplete";
 import TextField from "../../../components/text-field/text-field";
 
@@ -10,23 +10,17 @@ const OrderInput: FC<Props> = () => {
   return (
     <Grid container spacing={2}>
       <Grid item xs={4}>
-        <Autocomplete
-          id="nomenclature-input"
-          autoSelect
-          options={opt}
-          color="primary"
-          label="Номенклатура"
-        />
+        <Autocomplete id='nomenclature-input' autoSelect options={opt} color='primary' label='Номенклатура' />
       </Grid>
       <Grid item xs={1}>
-        <TextField fullWidth label="Высота" />
+        <TextField fullWidth label='Высота' />
       </Grid>
       <Grid item xs={1}>
-        <TextField fullWidth label="Ширина" />
+        <TextField fullWidth label='Ширина' />
       </Grid>
 
       <Grid item xs={1}>
-        <TextField fullWidth label="Кол-во" />
+        <TextField fullWidth label='Кол-во' />
       </Grid>
       <Grid item xs={5}>
         <TextField fullWidth />
@@ -35,4 +29,4 @@ const OrderInput: FC<Props> = () => {
   );
 };
 
-export default OrderInput;
+export default memo(OrderInput);

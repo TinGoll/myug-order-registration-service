@@ -51,6 +51,18 @@ export class PersonController {
     return this.personService.login(input);
   }
 
+  @Post('registration')
+  @HttpCode(201)
+  registration(@Body() input: PersonCreateInput) {
+    return this.personService.registration(input);
+  }
+
+  @Post('verification')
+  @HttpCode(200)
+  verification(@Body() { token }: { token: string }) {
+    return this.personService.verification(token);
+  }
+
   @Get('exists')
   exists(@Query() params: { login: string }) {
     return this.personService.loginExists(params?.login);

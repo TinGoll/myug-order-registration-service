@@ -13,7 +13,7 @@ export class OrderCreator {
     private readonly documentService: DocumentService,
     private readonly elementService: ElementService,
     private readonly orderProcessing: OrderProcessing,
-  ) {}
+  ) { }
 
   /** Одноразовая обработка заказа с сохранием и возвратом данных */
   once(order: OrderTypes.Order): Observable<OrderTypes.Order> {

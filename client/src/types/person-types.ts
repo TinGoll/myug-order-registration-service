@@ -12,6 +12,26 @@ declare module PersonTypes {
     email?: string;
     role: Role;
   }
+
+  interface RegistrationInput extends Partial<Omit<Person, "id" | "role">> {
+    login: string;
+    password: string;
+    firstName: string;
+  }
+
+  interface LoginInput {
+    login: string;
+    password: string;
+  }
+
+  interface LoginResponse {
+    token: string;
+    person: Person;
+  }
+
+  interface Verification {
+    token: string;
+  }
 }
 
 export default PersonTypes;

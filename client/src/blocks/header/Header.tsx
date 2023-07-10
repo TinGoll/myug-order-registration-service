@@ -14,6 +14,7 @@ import { styled, alpha } from "@mui/material/styles";
 import SearchIcon from "@mui/icons-material/Search";
 import React, { FC } from "react";
 import SvgMYugLogo from "../../assets/svg/logo/myug-logo";
+import HeaderUser from "./header-user";
 
 interface ISticky {
   sticky?: string;
@@ -147,11 +148,8 @@ const Header: FC<ISticky> = ({ stickyforce }) => {
                   от идеи до воплощения в каждой мелочи
                 </Typography>
               </Box>
-              
-              <Box sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}></Box>
-
-
-
+              <Box sx={{ flexGrow: 1 }}></Box>
+              <HeaderUser />
               {/* <Search>
                 <SearchIconWrapper>
                   <SearchIcon />

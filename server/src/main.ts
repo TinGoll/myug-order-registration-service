@@ -4,7 +4,7 @@ import * as fs from 'fs';
 import { ConfigService } from '@nestjs/config';
 import { HttpExceptionFilter } from './http-exception-filter/http-exception.filter';
 
-const whitelist = [];
+const whitelist = ['http://localhost:8000'];
 
 async function bootstrap() {
   const httpsOptions = getHttpsOptions('massiv-yug.ru');
@@ -31,7 +31,6 @@ async function bootstrap() {
   });
 
   app.useGlobalFilters(new HttpExceptionFilter());
-
   await app.listen(port, () => console.log(`server started on port: ${port}`));
 }
 bootstrap();

@@ -88,6 +88,40 @@ export class PersonService {
     );
   }
 
+  registration(
+    input: PersonCreateInput,
+  ): Observable<{ token: string; person: Person }> {
+    return this.create(input).pipe(
+      switchMap(({ password, ...person }) => {
+        return this.authService.generateJwt(person).pipe(
+          map((token) => ({
+            token,
+            person,
+          })),
+        );
+      }),
+    );
+  }
+
+  verification(token: string): Observable<{ token: string; person: Person }> {
+    return this.authService.decodedToken(token).pipe(
+      switchMap((value) => {
+        if (!value?.user) {
+          throw new HttpException(
+            `token is not valid`,
+            HttpStatus.UNAUTHORIZED,
+          );
+        }
+        return this.authService.generateJwt(value.user).pipe(
+          map((newToken) => ({
+            token: newToken,
+            person: value.user,
+          })),
+        );
+      }),
+    );
+  }
+
   login(
     input: PersonLoginInput,
   ): Observable<{ token: string; person: Person }> {
