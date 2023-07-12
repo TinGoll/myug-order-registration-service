@@ -19,6 +19,8 @@ export class Order implements OrderTypes.Order {
   @Column({ type: 'integer', nullable: true })
   itmId: number;
   @Column({ type: 'varchar', nullable: true })
+  note: string;
+  @Column({ type: 'varchar', nullable: true })
   clientNumner: string;
   @CreateDateColumn()
   createdAt: string | Date;

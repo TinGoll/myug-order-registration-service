@@ -20,31 +20,13 @@ export class OrderService {
   ) {}
   /** Создать новый заказ */
   create(input: CreateOrderInput): Observable<Order> {
-    const {
-      id,
-      author,
-      client,
-      manager,
-      deleted,
-      updatedAt,
-      createdAt,
-      ...data
-    } = input;
+    const { id, deleted, updatedAt, createdAt, ...data } = input;
     return from(this.repository.save({ ...data }));
   }
 
   /** Обовление/изменение полей заказа */
   update(input: UpdateOrderInput): Observable<any> {
-    const {
-      id,
-      author,
-      client,
-      manager,
-      updatedAt,
-      createdAt,
-      clientNumner,
-      ...data
-    } = input;
+    const { id, updatedAt, createdAt, ...data } = input;
     return from(this.repository.update({ id }, { ...data }));
   }
   /** Окончательное удаление заказа */
@@ -65,12 +47,9 @@ export class OrderService {
   }
 
   /** Получить несколько заказов */
-  findAll({
-    where,
-    relations,
-    skip,
-    take,
-  }: FindManyProps = {}): Observable<Order[]> {
+  findAll({ where, relations, skip, take }: FindManyProps = {}): Observable<
+    Order[]
+  > {
     return from(
       this.repository.find({
         where,

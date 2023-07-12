@@ -4,6 +4,7 @@ export class CreateOrderInput implements OrderTypes.CreateOrderInput {
   clientNumner?: string;
   id?: number;
   itmId?: number;
+  note?: string;
   author?: OrderTypes.Author;
   client?: OrderTypes.Client;
   manager?: OrderTypes.Manager;

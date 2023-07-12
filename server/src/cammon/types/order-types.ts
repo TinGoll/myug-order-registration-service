@@ -6,6 +6,7 @@ declare module OrderTypes {
   interface Order {
     id: number;
     itmId: number | null;
+    note: string | null;
     clientNumner: string | null;
     author: Author | null;
     client: Client | null;

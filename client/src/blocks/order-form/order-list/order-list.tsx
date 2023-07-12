@@ -6,6 +6,8 @@ import PaginationItem from "@mui/material/PaginationItem";
 import { columns } from "./order-list-columns";
 import StyledDataGrid from "./styled-data-grid";
 import { memo } from "react";
+import OrderTypes from "../../../types/order-types";
+import { Box } from "@mui/material";
 
 function CustomPagination() {
   const apiRef = useGridApiContext();
@@ -28,7 +30,7 @@ function CustomPagination() {
 
 const PAGE_SIZE = 5;
 
-const rows = [
+const initialRows = [
   { id: 1, num: 1, nomenclature: "Фасад глухой", height: 916, width: 396, amount: 5, comment: "" },
   { id: 2, num: 2, nomenclature: "Фасад глухой", height: 716, width: 396, amount: 1, comment: "" },
   { id: 3, num: 3, nomenclature: "Фасад Витрина", height: 596, width: 396, amount: 1, comment: "" },
@@ -45,14 +47,21 @@ const rows = [
   { id: 14, num: 14, nomenclature: "Фасад глухой", height: 916, width: 396, amount: 2, comment: "" },
 ];
 
-function OrderList() {
+interface Props {
+  elements?: OrderTypes.Element[];
+}
+
+function OrderList({ elements = [], ...props }: Props) {
+  const [rows, setRows] = React.useState(() => initialRows);
+  React.useEffect(() => {}, [elements]);
+
   const [paginationModel, setPaginationModel] = React.useState({
     pageSize: PAGE_SIZE,
     page: 0,
   });
 
   return (
-    <div style={{ height: 350, width: "100%" }}>
+    <Box sx={{ height: 350, width: "100%" }}>
       <StyledDataGrid
         color='primary'
         disableRowSelectionOnClick
@@ -66,7 +75,7 @@ function OrderList() {
         rows={rows}
         columns={columns}
       />
-    </div>
+    </Box>
   );
 }
 

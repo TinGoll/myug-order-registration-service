@@ -4,8 +4,10 @@ const componentKeys = ["geometry", "price"] as const;
 
 declare module OrderTypes {
   interface Order {
+    key: string;
     id?: number;
     itmId: number | null;
+    note?: string | null;
     clientNumner: string | null;
     author: Author | null;
     client: Client | null;
@@ -19,6 +21,7 @@ declare module OrderTypes {
   }
 
   interface Document {
+    key: string;
     id?: number;
     documentType?: string;
     material?: Material | null;
@@ -40,10 +43,11 @@ declare module OrderTypes {
     deleted: boolean;
   }
 
-  interface CreateOrderInput extends Partial<Order> {}
-  interface UpdateOrderInput extends Partial<Order> {
-    id: number;
+  interface CreateOrderInput extends Partial<Order> {
+    documentType?: string;
+    author: Author;
   }
+  interface UpdateOrderInput extends Partial<Order> {}
   interface CreateDocumentInput extends Partial<Document> {}
   interface UpdateDocumentInput extends Partial<Document> {
     id: number;
@@ -89,6 +93,7 @@ declare module OrderTypes {
   }
 
   interface Element {
+    key: string;
     id: number;
     name: string;
     note: string;
@@ -127,6 +132,16 @@ declare module OrderTypes {
     price: number;
     value: number;
     unit: Unit;
+  }
+
+  interface Hdbk {
+    nomenclatures: OrderTypes.Nomenclature[];
+    colors: OrderTypes.Color[];
+    materials: OrderTypes.Material[];
+    models: OrderTypes.FacadeModel[];
+    panels: OrderTypes.PanelModel[];
+    patinas: OrderTypes.Patina[];
+    varnishes: OrderTypes.Varnish[];
   }
 
   type Unit = "м²" | "м.п" | "шт." | "м. куб." | "п.м.п";

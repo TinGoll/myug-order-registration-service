@@ -7,13 +7,24 @@ import OrderList from "../order-list/order-list";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import { createOrder, setOrder } from "../../../store/slices/order.slice";
 import CloseIcon from "@mui/icons-material/Close";
+import { useHdbkQuery } from "../../../store/api/hdbk.api";
 
 const OrderForm = () => {
-  const order = useAppSelector((state) => state.orderForm.order);
+  const { data: hdbk, isLoading } = useHdbkQuery();
+  const orderForm = useAppSelector((state) => state.orderForm);
+  const author = useAppSelector((state) => state.authorization.person!);
   const dispatch = useAppDispatch();
 
+  const order = orderForm.order;
+  const documents = order?.documents;
+
   const handleCreateOrder = () => {
-    dispatch(createOrder("Фасады"));
+    dispatch(
+      createOrder({
+        author,
+        documentType: "Фасады",
+      })
+    );
   };
 
   const handleCloseOrder = () => {
@@ -52,25 +63,29 @@ const OrderForm = () => {
             Очистить форму
           </Button>
           <Tooltip title='Закрыть текущий заказ'>
-            <IconButton onClick={handleCloseOrder} color='primary'>
+            <IconButton onClick={handleCloseOrder} color='secondary'>
               <CloseIcon />
             </IconButton>
           </Tooltip>
         </Box>
       </Paper>
       <Paper elevation={1} sx={{ padding: 2, mt: 2 }}>
-        <OrderHeader />
+        <OrderHeader order={order} />
       </Paper>
-      <Paper elevation={1} sx={{ padding: 2, mt: 2 }}>
-        <DocumentHeader />
-      </Paper>
-
-      <Paper elevation={1} sx={{ padding: 2, mt: 2 }}>
-        <OrderInput />
-      </Paper>
-      <Paper elevation={1} sx={{ padding: 2, mt: 2 }}>
-        <OrderList />
-      </Paper>
+      {documents?.length &&
+        documents.map((document, index) => (
+          <React.Fragment key={document.key}>
+            <Paper elevation={1} sx={{ padding: 2, mt: 2 }}>
+              <DocumentHeader index={index} document={document} data={hdbk} isLoading={isLoading} />
+            </Paper>
+            <Paper elevation={1} sx={{ padding: 2, mt: 2 }}>
+              <OrderInput />
+            </Paper>
+            <Paper elevation={1} sx={{ padding: 2, mt: 2 }}>
+              <OrderList elements={document.elements} />
+            </Paper>
+          </React.Fragment>
+        ))}
     </>
   );
 };

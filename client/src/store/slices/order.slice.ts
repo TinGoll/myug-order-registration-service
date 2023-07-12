@@ -25,11 +25,12 @@ const orderSlice = createSlice({
   name: "order",
   initialState,
   reducers: {
-    createOrder: (state, action: PayloadAction<string>) => {
-      const order = new Order();
-      const document = new OrderDocument(action.payload);
+    createOrder: (state, action: PayloadAction<OrderTypes.CreateOrderInput>) => {
+      const order = new Order(action.payload.author);
+      const document = new OrderDocument(action.payload.documentType);
       order.documents.push(document);
       state.order = order;
+      return state;
     },
     setOrder: (state, action: PayloadAction<OrderTypes.Order | null>) => {
       state.order = action.payload;
@@ -44,15 +45,16 @@ const orderSlice = createSlice({
     },
     updateDocument: (state, action: PayloadAction<UpdateDocumentPayload>) => {
       if (!state.order) {
-        return;
+        return state;
       }
-      const document = state.order.documents[action.payload.index];
-      // Убираем необновляемые данные
-      const { elements, createdAt, updatedAt, order, ...data } = action.payload.document;
-      if (!document) {
-        return;
-      }
-      state.order.documents[action.payload.index] = { ...document, ...data };
+      const index = action.payload.index;
+      state.order.documents = state.order.documents.map((doc, i) => {
+        if (index === i) {
+          return { ...doc, ...action.payload.document };
+        }
+        return doc;
+      });
+      return { ...state };
     },
     updateElement: (state, action: PayloadAction<UpdateElementPayload>) => {
       if (!state.order) {

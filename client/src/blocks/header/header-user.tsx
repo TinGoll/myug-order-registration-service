@@ -40,6 +40,17 @@ const getIconColor = (role: Role, theme: Theme): string => {
   }
 };
 
+const getRole = (role: Role) => {
+  switch (role) {
+    case Role.ADMIN:
+      return `Администратор`;
+    case Role.MANAGER:
+      return `Менеджер`;
+    default:
+      return ``;
+  }
+};
+
 const HeaderUser = () => {
   const user = useAppSelector((state) => state.authorization.person);
   const dispatch = useAppDispatch();
@@ -91,7 +102,7 @@ const HeaderUser = () => {
         </Typography>
         {(user?.role === Role.ADMIN || user?.role === Role.MANAGER) && (
           <Typography fontSize={11} color='gray' textAlign='right'>
-            {`(${user?.role})`}
+            {`(${getRole(user?.role)})`}
           </Typography>
         )}
       </Box>

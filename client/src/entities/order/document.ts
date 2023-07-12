@@ -1,6 +1,8 @@
+import $nanoid from "../../features/nanoid";
 import OrderTypes from "../../types/order-types";
 
 export class OrderDocument implements Partial<OrderTypes.Document> {
+  key: string;
   documentType: string;
   material: OrderTypes.Material | null = null;
   facadeModel: OrderTypes.FacadeModel | null = null;
@@ -18,5 +20,6 @@ export class OrderDocument implements Partial<OrderTypes.Document> {
   elements: OrderTypes.Element[] = [];
   constructor(documentType: string = "Фасады") {
     this.documentType = documentType;
+    this.key = $nanoid();
   }
 }
