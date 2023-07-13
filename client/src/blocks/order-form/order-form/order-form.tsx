@@ -79,7 +79,7 @@ const OrderForm = () => {
               <DocumentHeader index={index} document={document} data={hdbk} isLoading={isLoading} />
             </Paper>
             <Paper elevation={1} sx={{ padding: 2, mt: 2 }}>
-              <OrderInput />
+              <OrderInput data={hdbk?.nomenclatures} />
             </Paper>
             <Paper elevation={1} sx={{ padding: 2, mt: 2 }}>
               <OrderList elements={document.elements} />

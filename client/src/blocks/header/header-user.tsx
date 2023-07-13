@@ -97,7 +97,7 @@ const HeaderUser = () => {
         })}
         onClick={handleOpenUserMenu}
       >
-        <Typography variant='body2' textTransform='uppercase' color='white'>
+        <Typography variant='body2' textTransform='uppercase' color='white' textAlign='right'>
           {getUserInitiatives(user?.firstName || "", user?.lastName, user?.middleName)}
         </Typography>
         {(user?.role === Role.ADMIN || user?.role === Role.MANAGER) && (
