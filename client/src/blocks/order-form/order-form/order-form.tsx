@@ -1,4 +1,4 @@
-import { Box, Button, IconButton, Paper, Tooltip, Typography } from "@mui/material";
+import { Box, Button, IconButton, Paper, Tooltip, Typography, useTheme } from "@mui/material";
 import React from "react";
 import DocumentHeader from "../document-header/document-header";
 import OrderHeader from "../order-header/order-header";
@@ -8,12 +8,16 @@ import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import { createOrder, setOrder } from "../../../store/slices/order.slice";
 import CloseIcon from "@mui/icons-material/Close";
 import { useHdbkQuery } from "../../../store/api/hdbk.api";
+import { orderSaveThunk } from "../../../store/thunks/order/save-order.thunk";
+import { LoadingButton } from "@mui/lab";
 
 const OrderForm = () => {
   const { data: hdbk, isLoading } = useHdbkQuery();
   const orderForm = useAppSelector((state) => state.orderForm);
   const author = useAppSelector((state) => state.authorization.person!);
   const dispatch = useAppDispatch();
+
+  const theme = useTheme();
 
   const order = orderForm.order;
   const documents = order?.documents;
@@ -29,6 +33,14 @@ const OrderForm = () => {
 
   const handleCloseOrder = () => {
     dispatch(setOrder(null));
+  };
+
+  const handleSaveOrder = () => {
+    // От правка заказа на сервер.
+    if (!orderForm.order) {
+      return;
+    }
+    dispatch(orderSaveThunk(orderForm.order));
   };
 
   if (!order) {
@@ -54,11 +66,35 @@ const OrderForm = () => {
 
   return (
     <>
-      <Paper elevation={1} sx={{ padding: 2, mt: 2 }}>
+      <Paper
+        elevation={1}
+        sx={{ padding: 2, mt: 2, display: "flex", justifyContent: "space-between", alignItems: "center" }}
+      >
+        <Box>
+          <Typography
+            py={1}
+            px={3}
+            bgcolor={theme.palette.background.paper}
+            boxShadow='1px 1px 2px 0px rgba(34, 60, 80, 0.3) inset'
+            fontSize={15}
+            fontWeight={500}
+            color={theme.palette.secondary.main}
+            display={orderForm.saved ? "initial" : "none"}
+          >
+            Заказ не сохранен!
+          </Typography>
+        </Box>
         <Box sx={{ display: "flex", flexDirection: "row", justifyContent: "flex-end", alignItems: "center", gap: 2 }}>
-          <Button variant='contained' color='success'>
+          <LoadingButton
+            onClick={handleSaveOrder}
+            disabled={!orderForm.saved}
+            loading={orderForm.loading}
+            loadingIndicator='Отправка...'
+            variant='contained'
+            color='success'
+          >
             Отправить заказ
-          </Button>
+          </LoadingButton>
           <Button onClick={handleCreateOrder} color='warning'>
             Очистить форму
           </Button>
@@ -79,10 +115,10 @@ const OrderForm = () => {
               <DocumentHeader index={index} document={document} data={hdbk} isLoading={isLoading} />
             </Paper>
             <Paper elevation={1} sx={{ padding: 2, mt: 2 }}>
-              <OrderInput data={hdbk?.nomenclatures} />
+              <OrderInput data={hdbk?.nomenclatures} index={index} />
             </Paper>
             <Paper elevation={1} sx={{ padding: 2, mt: 2 }}>
-              <OrderList elements={document.elements} />
+              <OrderList index={index} elements={document.elements} />
             </Paper>
           </React.Fragment>
         ))}

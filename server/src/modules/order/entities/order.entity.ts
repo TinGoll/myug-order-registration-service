@@ -11,6 +11,7 @@ import {
 import OrderTypes from '../../../cammon/types/order-types';
 import { OrderDocument } from './document.entity';
 import { Person } from '../../person/person.entity';
+import { OrderState } from '../enums/order-state.enum';
 
 @Entity('orders')
 export class Order implements OrderTypes.Order {
@@ -28,6 +29,14 @@ export class Order implements OrderTypes.Order {
   updatedAt: string | Date;
   @Column({ type: 'varchar', nullable: true })
   status: string;
+
+  @Column({
+    type: 'enum',
+    enum: OrderState,
+    default: OrderState.UNDER_VERIFICATION,
+  })
+  state: OrderState;
+
   @Column({ type: 'jsonb', default: {} })
   result: object;
   @Column({ type: 'boolean', default: false })

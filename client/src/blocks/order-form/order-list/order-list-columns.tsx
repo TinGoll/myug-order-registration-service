@@ -1,6 +1,8 @@
-import { GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
+import React from "react";
+import { GridColDef } from "@mui/x-data-grid";
+import DataGridActions from "./data-grid-actions";
 
-export const columns: GridColDef[] = [
+export const getColumns = (onDelete: (id: string) => void): GridColDef[] => [
   {
     field: "num",
     headerName: "№",
@@ -13,7 +15,7 @@ export const columns: GridColDef[] = [
     field: "nomenclature",
     headerName: "Номенклатура",
     width: 200,
-    editable: true,
+    editable: false,
     headerAlign: "center",
     description: "Номенклатура заказа",
   },
@@ -53,5 +55,16 @@ export const columns: GridColDef[] = [
     headerAlign: "center",
     editable: true,
     // valueGetter: (params: GridValueGetterParams) => `${params.row.firstName || ""} ${params.row.lastName || ""}`,
+  },
+  {
+    field: "actions",
+    headerName: "",
+    align: "center",
+    sortable: false,
+    editable: false,
+    width: 25,
+    renderCell(params) {
+      return <DataGridActions params={params} onDelete={onDelete} />;
+    },
   },
 ];

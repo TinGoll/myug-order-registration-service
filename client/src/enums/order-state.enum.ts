@@ -1,0 +1,5 @@
+export enum OrderState {
+  UNDER_EDITING,
+  UNDER_VERIFICATION,
+  UNDER_CONFIRMATION,
+}

@@ -1,3 +1,4 @@
+import { OrderState } from "../enums/order-state.enum";
 import PersonTypes from "./person-types";
 
 const componentKeys = ["geometry", "price"] as const;
@@ -15,6 +16,7 @@ declare module OrderTypes {
     createdAt?: Date | string;
     updatedAt?: Date | string;
     status?: Status | null;
+    state?: OrderState;
     result: OrderResult;
     documents: Document[];
     deleted: boolean;
@@ -94,12 +96,13 @@ declare module OrderTypes {
 
   interface Element {
     key: string;
-    id: number;
+    id?: number;
     name: string;
     note: string;
     nomenclature: Nomenclature;
+    willBeDeleted?: boolean;
     components: Component[];
-    document: Document;
+    document?: Document;
   }
 
   interface Nomenclature {

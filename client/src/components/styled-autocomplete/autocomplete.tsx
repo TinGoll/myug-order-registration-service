@@ -1,7 +1,7 @@
 import React from "react";
 import MaterialAutocomplete, { AutocompleteProps } from "@mui/material/Autocomplete";
 
-import { TextField, } from "@mui/material";
+import { TextField } from "@mui/material";
 import { alpha, styled } from "@mui/material/styles";
 
 type MaterialAutocompleteProps = AutocompleteProps<any, boolean, boolean, boolean, "div">;
@@ -10,6 +10,7 @@ type MaterialColor = "primary" | "secondary" | "error" | "info" | "success" | "w
 type ExtraProps = {
   color?: MaterialColor;
   label?: string;
+  inputRef?: any;
 };
 
 const StyledMaterialAutocomplete = styled(MaterialAutocomplete)<MaterialAutocompleteProps & ExtraProps>(
@@ -50,13 +51,18 @@ const StyledMaterialAutocomplete = styled(MaterialAutocomplete)<MaterialAutocomp
   })
 );
 
-const Autocomplete = ({ color, label, ...props }: Omit<MaterialAutocompleteProps, "renderInput"> & ExtraProps) => {
+const Autocomplete = ({
+  color,
+  label,
+  inputRef,
+  ...props
+}: Omit<MaterialAutocompleteProps, "renderInput"> & ExtraProps) => {
   return (
     <StyledMaterialAutocomplete
       {...props}
       color={color}
       renderInput={(opts) => {
-        return <TextField {...opts} label={label} />;
+        return <TextField inputRef={inputRef} {...opts} label={label} />;
       }}
     />
   );
