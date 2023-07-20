@@ -10,6 +10,8 @@ import CloseIcon from "@mui/icons-material/Close";
 import { useHdbkQuery } from "../../../store/api/hdbk.api";
 import { orderSaveThunk } from "../../../store/thunks/order/save-order.thunk";
 import { LoadingButton } from "@mui/lab";
+import OrderBlank from "../order-blank/order-blank";
+import { OrderState } from "../../../enums/order-state.enum";
 
 const OrderForm = () => {
   const { data: hdbk, isLoading } = useHdbkQuery();
@@ -62,6 +64,10 @@ const OrderForm = () => {
         </Paper>
       </>
     );
+  }
+
+  if (order.state === OrderState.UNDER_VERIFICATION || order.state === OrderState.UNDER_CONFIRMATION) {
+    return <OrderBlank order={order} confirmed={order.state === OrderState.UNDER_CONFIRMATION} />;
   }
 
   return (
