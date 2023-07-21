@@ -4,16 +4,12 @@ import { Paper, Grid, Box, styled, Typography, Button, Chip } from "@mui/materia
 import OrderBlankTable from "./order-blank-table";
 import moment from "moment";
 import { getUserInitiatives } from "../../../features/get-user-initiatives/get-user-initiatives";
-import FaceIcon from "@mui/icons-material/Face";
-import DoneOutlineIcon from "@mui/icons-material/DoneOutline";
 
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
-
-interface Props {
-  confirmed?: boolean;
-  order: OrderTypes.Order;
-}
+import { useAppDispatch } from "../../../store/hooks";
+import { OrderState } from "../../../enums/order-state.enum";
+import { setStateThunk } from "../../../store/thunks/order/set-state.thunk";
 
 const HeaderItem = styled(Box)`
   display: flex;
@@ -28,7 +24,7 @@ const HeaderName = styled(Box)`
 `;
 const HeaderValue = styled(Box)`
   flex: 1;
-  border-bottom: 1px solid #777;
+  border-bottom: 1px solid ${({ theme }) => theme.palette.divider};
   font-style: italic;
 `;
 
@@ -51,7 +47,24 @@ const OrderBox = styled(Box)`
   border-color: ${({ theme }) => theme.palette.divider};
 `;
 
-const OrderBlank: FC<Props> = ({ order, confirmed }) => {
+interface Props {
+  confirmed?: boolean;
+  order: OrderTypes.Order;
+  loading?: boolean;
+}
+
+const OrderBlank: FC<Props> = ({ order, confirmed, loading }) => {
+  const dispatch = useAppDispatch();
+
+  const handleSetState = (state: OrderState) => {
+    dispatch(
+      setStateThunk({
+        id: order.id || 0,
+        state,
+      })
+    );
+  };
+
   return (
     <Paper elevation={1} sx={{ padding: 2, mt: 2 }}>
       <OrderBox sx={{ justifyContent: "space-between", mt: 2, py: 2 }}>
@@ -109,7 +122,19 @@ const OrderBlank: FC<Props> = ({ order, confirmed }) => {
           icon={confirmed ? <CheckCircleOutlineIcon /> : <HighlightOffIcon />}
           label={confirmed ? "Заказ подтвержден." : "Заказ не подтвержден."}
         />
-        {!Boolean(confirmed) && <Button>Подтвердить</Button>}
+        {!Boolean(confirmed) && (
+          <Box>
+            <Button onClick={() => handleSetState(OrderState.UNDER_EDITING)}>Редактировать</Button>
+            <Button
+              onClick={() => handleSetState(OrderState.UNDER_CONFIRMATION)}
+              sx={{ ml: 1 }}
+              variant='contained'
+              color='success'
+            >
+              Подтвердить
+            </Button>
+          </Box>
+        )}
       </Box>
     </Paper>
   );

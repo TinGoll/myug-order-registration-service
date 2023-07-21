@@ -5,6 +5,7 @@ import { Order } from '../entities/order.entity';
 import { CreateOrderInput } from '../inputs/create.order.input';
 import { UpdateOrderInput } from '../inputs/update.order.input';
 import { Observable, from, map, of, switchMap } from 'rxjs';
+import { OrderState } from '../enums/order-state.enum';
 
 type FindProps = {
   where?: FindOptionsWhere<Order>;
@@ -57,6 +58,17 @@ export class OrderService {
         skip,
         take,
       }),
+    );
+  }
+
+  setState(id: number, state: OrderState) {
+    return from(
+      this.repository.update(
+        { id },
+        {
+          state,
+        },
+      ),
     );
   }
 

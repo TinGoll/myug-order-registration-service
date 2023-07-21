@@ -2,6 +2,8 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import OrderTypes from "../../types/order-types";
 import { Order, OrderDocument, OrderElement } from "../../entities/order";
 import { orderSaveThunk } from "../thunks/order/save-order.thunk";
+import { setStateThunk } from "../thunks/order/set-state.thunk";
+import { OrderState } from "../../enums/order-state.enum";
 
 interface State {
   order: OrderTypes.Order | null;
@@ -179,6 +181,25 @@ const orderSlice = createSlice({
       .addCase(orderSaveThunk.rejected, (state, action) => {
         state.loading = false;
         state.error = "В процессе сохранения заказа, произошла ошибка";
+      })
+      .addCase(setStateThunk.pending, (state, action) => {
+        state.loading = true;
+        state.error = "";
+      })
+      .addCase(setStateThunk.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = "";
+        if (state.order) {
+          state.order.state = action.payload.state;
+          if (action.payload.state === OrderState.UNDER_EDITING) {
+            state.saved = true;
+          }
+        }
+      })
+      .addCase(setStateThunk.rejected, (state, action) => {
+        console.log("setStateThunk.rejected", action);
+        state.loading = false;
+        state.error = "Ошибка изменения состояния заказа.";
       });
   },
 });
