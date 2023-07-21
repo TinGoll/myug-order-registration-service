@@ -20,9 +20,44 @@ export class OrderCreator {
 
   /** Одноразовая обработка заказа с сохранием и возвратом данных */
   once(order: OrderTypes.Order): Observable<OrderTypes.Order> {
-    return this.orderProcessing
-      .once(order)
-      .pipe(switchMap((processedOrder) => this.saveOrder(processedOrder)));
+    return this.orderCleaning(order).pipe(
+      switchMap((cleaningOrder) =>
+        this.orderProcessing
+          .once(cleaningOrder)
+          .pipe(switchMap((processedOrder) => this.saveOrder(processedOrder))),
+      ),
+    );
+  }
+
+  orderCleaning(order: OrderTypes.Order): Observable<OrderTypes.Order> {
+    // Фильтрация удаленных элементов.
+    const itemsToBeRemoved = order.documents?.reduce<OrderTypes.Element[]>(
+      (acc, item) => {
+        acc.push(
+          ...(item?.elements.filter(
+            (element) => element.willBeDeleted && element.id,
+          ) || []),
+        );
+        return acc;
+      },
+      [],
+    );
+
+    // Очистка удаленных элеметов.
+    for (const document of order.documents) {
+      document.elements = document.elements.filter(
+        (element) => !element.willBeDeleted,
+      );
+    }
+
+    if (!itemsToBeRemoved?.length) {
+      return of(order);
+    }
+    const elementObservables = itemsToBeRemoved.map((element) => {
+      return this.elementService.delete(element.id);
+    });
+
+    return forkJoin(elementObservables).pipe(map(() => order));
   }
 
   saveOrder(order: OrderTypes.Order): Observable<OrderTypes.Order> {
