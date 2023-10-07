@@ -13,6 +13,8 @@ const IndexPage: React.FC<PageProps> = ({ uri }) => {
     return <AuthPage />;
   }
 
+
+  
   return (
     <Layout headerSticky sx={{}}>
       <Container>
